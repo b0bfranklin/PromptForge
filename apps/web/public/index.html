@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptForge — OVIC/VPDSF Compliant</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .compliance-banner {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 20px;
+      border-bottom: 4px solid #e94560;
+    }
+
+    .compliance-banner h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .compliance-banner .badge {
+      display: inline-block;
+      background: #e94560;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .compliance-banner ul {
+      list-style: none;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .compliance-banner li:before {
+      content: "✓ ";
+      color: #4ecca3;
+      font-weight: bold;
+    }
+
+    .form-section {
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1a1a2e;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+    }
+
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #4ecca3;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 14px;
+      background: white;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #4ecca3;
+      color: #1a1a2e;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #3dbb8a;
+    }
+
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #d0d0d0;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .output-section {
+      padding: 30px;
+      background: #f9f9f9;
+      border-top: 1px solid #ddd;
+      display: none;
+    }
+
+    .output-section.visible {
+      display: block;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .output-header h2 {
+      font-size: 18px;
+      color: #1a1a2e;
+    }
+
+    .metadata {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .metadata-item {
+      font-size: 13px;
+    }
+
+    .metadata-label {
+      font-weight: 600;
+      color: #666;
+    }
+
+    .warnings {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+
+    .warnings h3 {
+      font-size: 14px;
+      color: #856404;
+      margin-bottom: 8px;
+    }
+
+    .warnings li {
+      font-size: 13px;
+      color: #856404;
+      margin-left: 20px;
+    }
+
+    .prompt-output {
+      background: white;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .discard-notice {
+      margin-top: 15px;
+      padding: 12px;
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="compliance-banner">
+      <div class="badge">OVIC / VPDSF — Local Only</div>
+      <h1>PromptForge</h1>
+      <ul>
+        <li>All data is de-identified</li>
+        <li>No information stored or retained</li>
+        <li>Local execution only</li>
+        <li>Victorian Government compliance</li>
+      </ul>
+    </div>
+
+    <form id="promptForm" class="form-section">
+      <div class="form-group">
+        <label for="taskInput">Task Description</label>
+        <textarea
+          id="taskInput"
+          name="taskInput"
+          placeholder="Enter your task description here. Any personal information will be automatically de-identified."
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="platformSelect">Target Platform</label>
+        <select id="platformSelect" name="platform">
+          <option value="claude-code">Claude Code (Development-focused)</option>
+          <option value="claude">Claude (Conversational)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tierSelect">Organization Tier</label>
+        <select id="tierSelect" name="tier">
+          <option value="government" selected>Government (Conservative, audit-safe)</option>
+          <option value="enterprise">Enterprise (Structured, risk-aware)</option>
+          <option value="business">Business (Clear, actionable)</option>
+        </select>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-primary">Generate Prompt</button>
+        <button type="button" id="clearBtn" class="btn-secondary">Clear</button>
+      </div>
+    </form>
+
+    <div id="outputSection" class="output-section">
+      <div class="output-header">
+        <h2>Generated Prompt</h2>
+        <button type="button" id="copyBtn" class="btn-primary" style="flex: 0 0 auto; width: auto; padding: 10px 20px;">Copy to Clipboard</button>
+      </div>
+
+      <div id="warningsContainer"></div>
+
+      <div class="metadata" id="metadataContainer"></div>
+
+      <div class="prompt-output" id="promptOutput"></div>
+
+      <div class="discard-notice">
+        ✓ Data discarded. No information retained.
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

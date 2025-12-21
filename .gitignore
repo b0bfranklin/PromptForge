@@ -7,3 +7,9 @@ dist
 core/**/*.js
 core/**/*.d.ts
 apps/**/dist
+
+# Web UI compiled outputs (keep HTML)
+apps/web/public/**/*.js
+apps/web/public/**/*.d.ts
+apps/web/public/apps
+apps/web/public/core
