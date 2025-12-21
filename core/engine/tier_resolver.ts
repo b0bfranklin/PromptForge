@@ -5,7 +5,7 @@
  * These contexts guide the AI's tone, approach, and output style.
  */
 
-import type { Tier } from "../types";
+import type { Tier } from "../types.js";
 
 /**
  * Resolve tier-specific behavioral context.

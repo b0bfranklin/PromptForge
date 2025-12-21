@@ -27,7 +27,7 @@
  */
 
 // Core builder function
-export { buildPrompt, buildPromptString } from "./engine/prompt_builder";
+export { buildPrompt, buildPromptString } from "./engine/prompt_builder.js";
 
 // Type exports
 export type {
@@ -36,19 +36,19 @@ export type {
   Tier,
   PromptRequest,
   PromptResult
-} from "./types";
+} from "./types.js";
 
 // Compliance utilities (for advanced use)
 export {
   applyCompliance,
   validateNoInference
-} from "./engine/compliance_guard";
+} from "./engine/compliance_guard.js";
 
 // Platform adapter (for custom workflows)
-export { adaptForPlatform } from "./engine/platform_adapter";
+export { adaptForPlatform } from "./engine/platform_adapter.js";
 
 // Tier resolver (for custom workflows)
-export { resolveTier } from "./engine/tier_resolver";
+export { resolveTier } from "./engine/tier_resolver.js";
 
 // Storage prohibition marker
-export { noStore } from "./memory/no_store";
+export { noStore } from "./memory/no_store.js";

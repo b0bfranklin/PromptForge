@@ -10,10 +10,10 @@
  * This is the primary entry point for PromptForge.
  */
 
-import { applyCompliance, validateNoInference } from "./compliance_guard";
-import { adaptForPlatform } from "./platform_adapter";
-import { resolveTier } from "./tier_resolver";
-import type { PromptRequest, PromptResult } from "../types";
+import { applyCompliance, validateNoInference } from "./compliance_guard.js";
+import { adaptForPlatform } from "./platform_adapter.js";
+import { resolveTier } from "./tier_resolver.js";
+import type { PromptRequest, PromptResult } from "../types.js";
 
 /**
  * Build a compliant, platform-specific prompt from user input.
