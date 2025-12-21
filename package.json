@@ -1,0 +1,12 @@
+{
+  "name": "promptforge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
