@@ -15,22 +15,71 @@ without exposing regulated data.
 - Not a SaaS product
 - Not cloud-dependent
 
-## Compliance Focus (Phase 1)
+## Compliance Focus
 - OVIC (Victorian Information Privacy)
 - VPDSF (Victorian Protective Data Security Framework)
 
-All data is assumed to be:
-- De-identified
-- Synthetic
-- Non-persistent
+All data is:
+- De-identified automatically
+- Never stored or retained
+- Local execution only
 
-## Supported Platforms (Initial)
-- Claude
-- Claude Code
+## Supported Platforms
+- Claude (conversational)
+- Claude Code (development-focused)
 
-## Operation Model
-- Runs fully locally
-- No data storage by default
-- Clipboard output only
+## Usage
 
-See `/docs/compliance.md` for details.
+### CLI (Command Line)
+
+```bash
+cd apps/local-cli
+npm install
+npm run build
+
+# Interactive mode
+node dist/apps/local-cli/src/index.js
+
+# Direct mode
+node dist/apps/local-cli/src/index.js -i "Review contract" -p claude-code -t government
+
+# Help
+node dist/apps/local-cli/src/index.js --help
+```
+
+### Web UI (Local Browser)
+
+```bash
+cd apps/web
+npm install
+npm start
+```
+
+Visit: http://127.0.0.1:3000
+
+## De-identification
+
+Automatic scrubbing of:
+- Personal names, emails, phone numbers
+- Australian identifiers (ABN, Medicare, postcodes)
+- Addresses, dates, IP addresses
+- Payment card numbers, generic identifiers
+
+## Defaults
+- **Platform:** claude-code
+- **Tier:** government
+- **Compliance:** OVIC_VPDSF (non-disableable)
+
+## Architecture
+
+```
+core/engine/          # Compliance & prompt generation
+apps/local-cli/       # Command-line interface
+apps/web/             # Local web interface
+```
+
+## Technical
+- TypeScript (strict mode)
+- ES2022 modules
+- No runtime dependencies (core)
+- Stateless, pure functions

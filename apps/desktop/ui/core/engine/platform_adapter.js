@@ -8,10 +8,6 @@
  * Ensures compliance headers are present and appropriate
  * for the target platform's interaction model.
  */
-
-export type Platform = "claude" | "claude-code";
-export type ComplianceMode = "OVIC_VPDSF";
-
 /**
  * Generate the OVIC/VPDSF compliance header.
  *
@@ -23,12 +19,11 @@ export type ComplianceMode = "OVIC_VPDSF";
  * @param mode - Compliance mode
  * @returns Formatted compliance header
  */
-function buildComplianceHeader(mode: ComplianceMode): string {
-  if (mode !== "OVIC_VPDSF") {
-    return "";
-  }
-
-  return `# Compliance Notice
+function buildComplianceHeader(mode) {
+    if (mode !== "OVIC_VPDSF") {
+        return "";
+    }
+    return `# Compliance Notice
 
 The following content is de-identified and synthetic.
 
@@ -41,7 +36,6 @@ The following content is de-identified and synthetic.
 **Compliance mode:** OVIC / VPDSF (Victorian Government)
 `;
 }
-
 /**
  * Build Claude-specific prompt formatting.
  *
@@ -53,12 +47,8 @@ The following content is de-identified and synthetic.
  * @param complianceHeader - Compliance notice
  * @returns Formatted prompt for Claude
  */
-function buildClaudePrompt(
-  input: string,
-  tierContext: string,
-  complianceHeader: string
-): string {
-  return `${complianceHeader}
+function buildClaudePrompt(input, tierContext, complianceHeader) {
+    return `${complianceHeader}
 
 ${tierContext}
 
@@ -66,7 +56,6 @@ ${tierContext}
 
 ${input}`;
 }
-
 /**
  * Build Claude Code-specific prompt formatting.
  *
@@ -78,12 +67,8 @@ ${input}`;
  * @param complianceHeader - Compliance notice
  * @returns Formatted prompt for Claude Code
  */
-function buildClaudeCodePrompt(
-  input: string,
-  tierContext: string,
-  complianceHeader: string
-): string {
-  return `${complianceHeader}
+function buildClaudeCodePrompt(input, tierContext, complianceHeader) {
+    return `${complianceHeader}
 
 ${tierContext}
 
@@ -98,7 +83,6 @@ ${input}
 - Avoid speculation or inference
 - Do not reference compliance constraints in output`;
 }
-
 /**
  * Adapt the de-identified input for the target platform.
  *
@@ -108,24 +92,16 @@ ${input}
  * @param complianceMode - Compliance mode for header generation
  * @returns Platform-specific formatted prompt
  */
-export function adaptForPlatform(
-  input: string,
-  platform: Platform,
-  tierContext: string,
-  complianceMode: ComplianceMode
-): string {
-  const complianceHeader = buildComplianceHeader(complianceMode);
-
-  switch (platform) {
-    case "claude":
-      return buildClaudePrompt(input, tierContext, complianceHeader);
-
-    case "claude-code":
-      return buildClaudeCodePrompt(input, tierContext, complianceHeader);
-
-    default:
-      // TypeScript exhaustiveness check
-      const _exhaustive: never = platform;
-      throw new Error(`Unsupported platform: ${_exhaustive}`);
-  }
+export function adaptForPlatform(input, platform, tierContext, complianceMode) {
+    const complianceHeader = buildComplianceHeader(complianceMode);
+    switch (platform) {
+        case "claude":
+            return buildClaudePrompt(input, tierContext, complianceHeader);
+        case "claude-code":
+            return buildClaudeCodePrompt(input, tierContext, complianceHeader);
+        default:
+            // TypeScript exhaustiveness check
+            const _exhaustive = platform;
+            throw new Error(`Unsupported platform: ${_exhaustive}`);
+    }
 }

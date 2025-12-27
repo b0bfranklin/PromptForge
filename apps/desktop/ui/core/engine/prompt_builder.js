@@ -9,12 +9,9 @@
  *
  * This is the primary entry point for PromptForge.
  */
-
 import { applyCompliance, validateNoInference } from "./compliance_guard.js";
 import { adaptForPlatform } from "./platform_adapter.js";
 import { resolveTier } from "./tier_resolver.js";
-import type { PromptRequest, PromptResult } from "../types.js";
-
 /**
  * Build a compliant, platform-specific prompt from user input.
  *
@@ -27,42 +24,28 @@ import type { PromptRequest, PromptResult } from "../types.js";
  * @param request - Structured prompt request
  * @returns Complete prompt result with warnings and metadata
  */
-export function buildPrompt(request: PromptRequest): PromptResult {
-  // Validate for prohibited inference language
-  const warnings = validateNoInference(request.rawInput);
-
-  // Apply OVIC/VPDSF de-identification
-  const compliantInput = applyCompliance(
-    request.rawInput,
-    request.complianceMode
-  );
-
-  // Determine if de-identification occurred
-  const wasDeIdentified = compliantInput !== request.rawInput;
-
-  // Resolve tier-specific context
-  const tierContext = resolveTier(request.tier);
-
-  // Generate platform-specific formatted prompt
-  const prompt = adaptForPlatform(
-    compliantInput,
-    request.platform,
-    tierContext,
-    request.complianceMode
-  );
-
-  return {
-    prompt,
-    warnings,
-    metadata: {
-      platform: request.platform,
-      tier: request.tier,
-      complianceMode: request.complianceMode,
-      wasDeIdentified
-    }
-  };
+export function buildPrompt(request) {
+    // Validate for prohibited inference language
+    const warnings = validateNoInference(request.rawInput);
+    // Apply OVIC/VPDSF de-identification
+    const compliantInput = applyCompliance(request.rawInput, request.complianceMode);
+    // Determine if de-identification occurred
+    const wasDeIdentified = compliantInput !== request.rawInput;
+    // Resolve tier-specific context
+    const tierContext = resolveTier(request.tier);
+    // Generate platform-specific formatted prompt
+    const prompt = adaptForPlatform(compliantInput, request.platform, tierContext, request.complianceMode);
+    return {
+        prompt,
+        warnings,
+        metadata: {
+            platform: request.platform,
+            tier: request.tier,
+            complianceMode: request.complianceMode,
+            wasDeIdentified
+        }
+    };
 }
-
 /**
  * Legacy interface: returns only the prompt string.
  *
@@ -70,6 +53,6 @@ export function buildPrompt(request: PromptRequest): PromptResult {
  *
  * @deprecated Use buildPrompt() instead
  */
-export function buildPromptString(request: PromptRequest): string {
-  return buildPrompt(request).prompt;
+export function buildPromptString(request) {
+    return buildPrompt(request).prompt;
 }

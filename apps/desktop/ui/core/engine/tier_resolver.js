@@ -4,19 +4,16 @@
  * Maps organization tiers to behavioral context instructions.
  * These contexts guide the AI's tone, approach, and output style.
  */
-
-import type { Tier } from "../types.js";
-
 /**
  * Resolve tier-specific behavioral context.
  *
  * @param tier - Organization tier
  * @returns Formatted context string for prompt inclusion
  */
-export function resolveTier(tier: Tier): string {
-  switch (tier) {
-    case "government":
-      return `# Context
+export function resolveTier(tier) {
+    switch (tier) {
+        case "government":
+            return `# Context
 
 You are operating in a Victorian Government context.
 
@@ -26,9 +23,8 @@ You are operating in a Victorian Government context.
 - Produce audit-safe, evidence-based outputs
 - Prioritize compliance and risk management
 - Do not introduce creative or experimental approaches`;
-
-    case "enterprise":
-      return `# Context
+        case "enterprise":
+            return `# Context
 
 You are operating in an enterprise context.
 
@@ -37,9 +33,8 @@ You are operating in an enterprise context.
 - Consider scalability and maintainability
 - Use industry-standard terminology
 - Balance innovation with stability`;
-
-    case "business":
-      return `# Context
+        case "business":
+            return `# Context
 
 You are operating in a general business context.
 
@@ -47,10 +42,9 @@ You are operating in a general business context.
 - Provide clear, actionable output
 - Focus on practical solutions
 - Use accessible language`;
-
-    default:
-      // TypeScript exhaustiveness check
-      const _exhaustive: never = tier;
-      throw new Error(`Unsupported tier: ${_exhaustive}`);
-  }
+        default:
+            // TypeScript exhaustiveness check
+            const _exhaustive = tier;
+            throw new Error(`Unsupported tier: ${_exhaustive}`);
+    }
 }
